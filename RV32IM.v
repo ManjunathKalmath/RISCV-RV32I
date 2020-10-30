@@ -1,6 +1,49 @@
-//Know about decoding bits of Base Integer Intructions
-//decoding bits = {funct7[5],funct3,opcode}
-for reference check pg no = 116 of below link: (https://riscv.org//wp-content/uploads/2017/05/riscv-spec-v2.2.pdf)
+//Top module
+module RV32IM(clock);
+  input clock;
+  reg [31:0] PC,IR;
+  input [31:0] A,B;
+  RISCV_ALU(ALU_Ctrl,A,B.ALU_Out);
+ endmodule
+
+//RISCV ALU - need to be edited while merging the entire code
+module RISCV_ALU(ALU_Ctrl,A,B.ALU_Out);
+ input [31:0] A,B;
+ input ALU_Ctrl;
+ output reg [31:0] ALU_Out;
+ outut zero;
+ if(ALU_Out == 0)
+  zero = ALU_Out;
+ always @(*)
+  begin
+   case(ALU_Ctrl)
+    0: ALU_Out <= A + B;
+    1: ALU_Out <= A - B;
+    2: ALU_Out <= A | B;
+    3: ALU_Out <= A & B;
+    4: ALU_Out <= A < B ? 1 : 0;
+    default ALU_Out <= 0;
+   endcase
+  end
+endmodule
+  
+//RISCV Register File
+module Register_File(Read_Reg1,Read_Reg2,Read_Data1,Read_data2,Clock,Write_Reg,Write_Data,Write);
+ input [5:0] Read_Reg1,Read_Reg2,Write_Reg;
+ input [31:0] Write_Data;
+ input Write,clock;//here write is the Control to Register File
+ reg [31:0] Reg_File [31:0];//32 registres each of 32 bit long
+ 
+ assign Read_Data1 = Reg_File[Read_reg1];
+ assign Read_Data2 = Reg_File[Read_reg2];
+ always @(posedge clock)
+  begin
+  if(Write)
+   Reg_File[Write_reg] <= Write_Data;
+  end
+endmodule
+
+
 //Arithmetic Instructions
 ADD = 11'b0_000_0110011;
 ADDI = 11'bx_000_0010011;
