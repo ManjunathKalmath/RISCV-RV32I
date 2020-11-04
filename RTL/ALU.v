@@ -1,4 +1,3 @@
-//Need to add ALU code
 module RISCV_ALU(ALU_Ctrl,A,B.ALU_Out);
  input [31:0] A,B;
  input ALU_Ctrl;
