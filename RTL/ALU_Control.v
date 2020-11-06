@@ -1,14 +1,8 @@
-module ALU_Control(ALU_OP,funct_code,ALU_Ctl);
-input [1:0] ALU_OP;
+module ALU_Control(ALU_OP,funct_code,ALU_Ctrl);
+  input [1:0] ALU_OP;
   input [10:0] funct_code;
-Output reg [3:0] ALU_Ctl;
-//Arithmetic Instructions
-ADD = 11'b0_000_0110011;
-ADDI = 11'bx_000_0010011;
-OR = 11'b0_110_0110011;
-ORI = 11'bx_110_0010011;
-XOR = 11'b0_100_0110011;
-XORI = 11'bx_100_0010011
+  Output reg [3:0] ALU_Ctrl;
+  
 always begin
   case (funct_code)
      11'b0_000_0110011 : ALU_OP <= 1; // ADD
