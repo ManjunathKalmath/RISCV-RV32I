@@ -1,7 +1,7 @@
 module ALU_Control(ALU_OP,funct_code,ALU_Ctrl);
   input [1:0] ALU_OP;
   input [10:0] funct_code;
-  output reg [3:0] ALU_Ctrl;
+  output reg [4:0] ALU_Ctrl;
   
 always begin
   case (funct_code)
