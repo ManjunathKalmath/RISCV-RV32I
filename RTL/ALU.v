@@ -1,6 +1,6 @@
 module RISCV_ALU(ALU_Ctrl,A,B,ALU_Out);
  input [31:0] A,B;
- input ALU_Ctrl;
+ input [3:0] ALU_Ctrl;
  output reg [31:0] ALU_Out;
  outut zero;
  if(ALU_Out == 0)
