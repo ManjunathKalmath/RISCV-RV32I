@@ -1,8 +1,13 @@
-module RISCV_ALU(ALU_Ctrl,A,B,ALU_Out);
+module RISCV_ALU(ALU_Ctrl,A,B,Bsel,ALU_Out);
  input [31:0] A,B;
  input [4:0] ALU_Ctrl;
+ input Bsel;
  output reg [31:0] ALU_Out;
  outut zero;
+ if(Bsel == 1)
+  begin
+   
+  end
  if(ALU_Out == 0)
   zero = ALU_Out;
  always @(*)
