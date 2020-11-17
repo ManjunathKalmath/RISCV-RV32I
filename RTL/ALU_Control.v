@@ -1,6 +1,7 @@
-module ALU_Control(ALU_OP,funct_code,ALU_Ctrl);
+module ALU_Control(ALU_OP,funct_code,Bsel,ALU_Ctrl);
   input [1:0] ALU_OP;
   input [10:0] funct_code;
+  input Bsel;
   output reg [4:0] ALU_Ctrl;
   
 always begin
