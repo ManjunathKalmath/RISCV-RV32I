@@ -4,9 +4,9 @@ output [31:0] IR;
 reg [31:0] Memory [0:1023];
 
 initial begin
- $readmemh("code.txt",mem);
+ $readmemh("prog.txt",Memory);
 end
 
-assign IR = mem[Address>>2];
+assign IR = Memory [Address>>2];
 
 endmodule
