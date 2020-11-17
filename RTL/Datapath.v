@@ -2,12 +2,29 @@ module RV32IM_Datapath(clock);
   input clock;
   input Write,Bsel,Immsel;
   
-  reg [31:0] PC,IR,ALU_Out;
-  reg [31:0] Memory [0:1023];
+  reg [31:0] PC_current,PC_next,IR,ALU_Out;
   
   wire [31:0] A,B,Imm;
-  wire zero;
+  wire zero,funct3,funct7,opcode,rd,rs1,rs2,Write_Data;
   wire [4:0] ALU_Ctrl;
+  
+ if(Immsel == I)
+    begin
+      assign Imm = {{20{IR[31]}}, IR[30:20]}; //sign extension of IR[31] to upper Imm value
+    end
+  
+ initial begin
+  PC_current <= 31'd0;
+ end
+  
+ always @(posedge clk)
+ begin 
+   PC_current <= PC_next;
+ end
+  
+  //assign pc2 = pc_current + 16'd2;
+  
+  Instruction_Memory RV_IM(PC_current,IR);
   
   assign funct3 = IR[14:12];
   assign funct7 = IR[31:25]; 
@@ -16,19 +33,16 @@ module RV32IM_Datapath(clock);
   assign rs1 = IR[19:15];
   assign rs2 = IR[24:20];
   
-  if(Immsel == I)
-    begin
-      assign Imm = {{20{IR[31]}}, IR[30:20]}; //sign extension of IR[31] to upper Imm value
-    end
-        
-  Fetch = Memory[PC];
-  PC <= PC + 4;
-  Register_File RF_RV(rs1,rs2,A,B,Clock,Write_Reg,Write_Data,Write=0);
-  RISCV_ALU ALU_RV(ALU_Ctrl,A,B,ALU_Out);
-  Register_File RF_RV(rs1,rs2,A,B,Clock,rd,Write_Data,Write=1);
+//  PC <= PC + 4;
+  Register_File RF_RV(rs1,rs2,A,B,Clock,Write_Reg,Write_Data,Write);
   
+  assign Imm = {{20{IR[31]}}, IR[30:20]}; //sign extension of IR[31] to upper Imm value
   
+  RISCV_ALU ALU_RV(ALU_Ctrl,A,B,Imm,ALU_Out);
   
+  if(Write == 1)
+    assign Write_Data = ALU_Out;
+  Register_File RF_RV(rs1,rs2,A,B,Clock,rd,Write_Data,Write);
   
   
 endmodule
