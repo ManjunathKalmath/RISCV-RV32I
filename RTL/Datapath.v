@@ -1,6 +1,6 @@
-module RV32IM(clock);
+module RV32IM_Datapath(clock);
   input clock;
-  input Write
+  input Write,Bsel;
   
   reg [31:0] PC,IR,ALU_Out;
   reg [31:0] Memory [0:1023];
