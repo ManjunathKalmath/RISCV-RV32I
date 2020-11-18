@@ -1,11 +1,11 @@
 module RV32IM_Datapath(clock);
   input clock;
-  input Write,Bsel,Immsel,WBsel;
+  input Write,Bsel,Immsel,WBsel,Asel,PCsel;
   
-  reg [31:0] PC_current,PC_next,IR,ALU_Out;
+  reg [31:0] IR,ALU_Out;
   
   wire [31:0] A,B,Imm;
-  wire zero,funct3,funct7,opcode,rd,rs1,rs2,Write_Data,Read_Data2,Read_Data1,Write_back;
+  wire zero,funct3,funct7,opcode,rd,rs1,rs2,Write_Data,Read_Data2,Read_Data1,Write_back,PC_current,PC_next;
   wire [4:0] ALU_Ctrl;
   
  if(Immsel == I)
@@ -47,8 +47,12 @@ module RV32IM_Datapath(clock);
   else
     assign Mem_write_data = Read_Data2;
       
- 
-  Register_File RF_RV(rs1,rs2,A,B,Clock,rd,Write_Data,Write);
+  //Register_File RF_RV(rs1,rs2,A,B,Clock,rd,Write_Data,Write);
+  
+  Branch_Comparator RV_BRC(Read_Data1,Read_Data2,BrUn,BrEq,BrLT,BrGE);
+  
+  assign PC = (PCsel == 1'b1) ? ALU_Out : PC+4;
+  
   
   
 endmodule
