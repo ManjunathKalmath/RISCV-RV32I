@@ -24,6 +24,7 @@ module RISCV_ALU(ALU_Ctrl,Asel,Bsel,PC,Read_Data1,Read_Data1,Imm,ALU_Out);
     8 : ALU_Out <= A & Imm; //ANDI;
     9 : ALU_Out <= A - B; //SUB
    10 : ALU_Out <= A < B ? 1 : 0; //SLT
+    //Need to refer the followings behaviour
    11 : ALU_Out <=  //SLTI
    12 : ALU_Out <= //SLTU
    13 : ALU_Out <= //SLTIU
