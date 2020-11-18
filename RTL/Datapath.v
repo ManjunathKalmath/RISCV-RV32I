@@ -5,7 +5,7 @@ module RV32IM_Datapath(clock);
   reg [31:0] PC_current,PC_next,IR,ALU_Out;
   
   wire [31:0] A,B,Imm;
-  wire zero,funct3,funct7,opcode,rd,rs1,rs2,Write_Data,Read_Data2,Write_back;
+  wire zero,funct3,funct7,opcode,rd,rs1,rs2,Write_Data,Read_Data2,Read_Data1,Write_back;
   wire [4:0] ALU_Ctrl;
   
  if(Immsel == I)
