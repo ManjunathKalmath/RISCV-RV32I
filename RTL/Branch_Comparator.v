@@ -6,11 +6,11 @@ module Branch_Comparator(Read_Data1,Read_Data2,BrUn,BrEq,BrLT,BrGE);
  if(Read_Data1 == Read_Data2)
   BrEq = 1;
  else if(Read_Data1 < Read_Data2)
- BrLT = 1;
+  BrLT = 1;
  else if(!(Read_Data1 < Read_Data2))
- BrGE = 1;
+  BrGE = 1;
  else
- $display("Error");
+  $display("Error");
  end
  
 endmodule
