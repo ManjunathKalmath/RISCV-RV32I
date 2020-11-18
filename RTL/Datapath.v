@@ -40,7 +40,14 @@ module RV32IM_Datapath(clock);
   
   RISCV_ALU ALU_RV(ALU_Ctrl,A,B,Imm,ALU_Out);
   
-  assign Write_back = (WBsel == 1'b1) ? ALU_Out : Mem_read_data; //Write a control signal
+  //assign Write_back = (WBsel == 1'b1) ? ALU_Out : Mem_read_data; //Write a control signal
+  
+  if(WBsel == 1'd0)
+    assign Write_back = Mem_read_data;
+  else if(WBsel == 1'd1)
+    assign Write_back = ALU_Out;
+  else if(WBsel == 1'd2)
+    assign Write_back = PC + 4;
   
   if(Write == 1'b1)
       assign Write_Data = Write_back;
