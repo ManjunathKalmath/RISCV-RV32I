@@ -22,7 +22,7 @@ module RV32IM_Datapath(clock);
    PC_current <= PC_next;
  end
   
-  //assign pc2 = pc_current + 32'd;
+  //assign pc2 = pc_current + 4;
   
   Instruction_Memory RV_IM(PC_current,IR);
   
