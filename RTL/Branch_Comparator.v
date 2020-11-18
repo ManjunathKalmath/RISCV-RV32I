@@ -1,6 +1,7 @@
 module Branch_Comparator(Read_Data1,Read_Data2,BrUn,BrEq,BrLT,BrGE);
  input [31:0] Read_Data1,Read_Data2;
- output BrUn,BrEq,BrLT,BrGE;
+ input BrUn;
+ output BrEq,BrLT,BrGE;
  
  begin
  if(Read_Data1 == Read_Data2)
