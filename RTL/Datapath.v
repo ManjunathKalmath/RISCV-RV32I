@@ -1,11 +1,11 @@
 module RV32IM_Datapath(clock);
   input clock;
-  input Write,Bsel,Immsel;
+  input Write,Bsel,Immsel,WBsel;
   
   reg [31:0] PC_current,PC_next,IR,ALU_Out;
   
   wire [31:0] A,B,Imm;
-  wire zero,funct3,funct7,opcode,rd,rs1,rs2,Write_Data;
+  wire zero,funct3,funct7,opcode,rd,rs1,rs2,Write_Data,Read_Data2,Write_back;
   wire [4:0] ALU_Ctrl;
   
  if(Immsel == I)
@@ -22,7 +22,7 @@ module RV32IM_Datapath(clock);
    PC_current <= PC_next;
  end
   
-  //assign pc2 = pc_current + 16'd2;
+  //assign pc2 = pc_current + 32'd;
   
   Instruction_Memory RV_IM(PC_current,IR);
   
@@ -40,8 +40,14 @@ module RV32IM_Datapath(clock);
   
   RISCV_ALU ALU_RV(ALU_Ctrl,A,B,Imm,ALU_Out);
   
-  if(Write == 1)
-    assign Write_Data = ALU_Out;
+  assign Write_back = (WBsel == 1'b1) ? ALU_Out : Mem_read_data; //Write a control signal
+  
+  if(Write == 1'b1)
+      assign Write_Data = Write_back;
+  else
+    assign Mem_write_data = Read_Data2;
+      
+ 
   Register_File RF_RV(rs1,rs2,A,B,Clock,rd,Write_Data,Write);
   
   
