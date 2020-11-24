@@ -3,7 +3,7 @@ module ALU_Control(opcode,funct3,funct7,Bsel,ALU_Ctrl);
   input [2:0] funct3;
   input [7:0] funct7;
   input Bsel;
-  wire funct_code;
+  wire [10:0] funct_code;
   output reg [4:0] ALU_Ctrl;
   
   assign funct_code = {funct7[6],funct3,opcode};
