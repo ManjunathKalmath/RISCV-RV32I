@@ -1,12 +1,17 @@
-module ALU_Control(funct_code,Bsel,ALU_Ctrl);
-  input [10:0] funct_code;
+module ALU_Control(opcode,funct3,funct7,Bsel,ALU_Ctrl);
+  input [6:0] opcode;
+  input [2:0] funct3;
+  input [7:0] funct7;
   input Bsel;
+  wire funct_code;
   output reg [4:0] ALU_Ctrl;
   
-always begin
+  assign funct_code = {funct7[6],funct3,opcode};
+  always@ (funct_code)
+    begin
   if(Bsel == 1)
     begin
-      case(funct_code)
+      casex (funct_code)
          11'bx_000_0010011 : ALU_Ctrl <= 2; //ADDI
          11'bx_110_0010011 : ALU_Ctrl <= 4; //ORI
          11'bx_100_0010011 : ALU_Ctrl <= 6; //XORI
@@ -16,7 +21,7 @@ always begin
     end
   else
     begin
-      case (funct_code)
+      casex (funct_code)
         11'b0_000_0110011 : ALU_Ctrl <= 1; // ADD
         11'b0_110_0110011 : ALU_Ctrl <= 3; //OR
         11'b0_100_0110011 : ALU_Ctrl <= 5; //XOR
@@ -33,4 +38,5 @@ always begin
         11'b1_101_0110011 : ALU_Ctrl <= 19; //SRA
     endcase
   end
+    end
 endmodule
