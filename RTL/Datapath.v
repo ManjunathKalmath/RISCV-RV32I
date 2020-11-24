@@ -2,11 +2,34 @@ module RV32IM_Datapath(clock);
   input clock;
   input Write,Bsel,Immsel,WBsel,Asel,PCsel;
   
-  reg [31:0] IR,ALU_Out;
+  reg [31:0] IR,ALU_Out,PC_current;
   
-  wire [31:0] A,B,Imm;
-  wire zero,funct3,funct7,opcode,rd,rs1,rs2,Write_Data,Read_Data2,Read_Data1,Write_back,PC_current,PC_next;
+  wire [31:0] A,B,Imm,rd,rs1,rs2,Write_Data,Read_Data2,Read_Data1,Write_back,PC_next,PC2;
+  wire zero;
+  wire [2:0] funct3,
+  wire [6:0]funct7,opcode; 
   wire [4:0] ALU_Ctrl;
+  
+  initial begin
+    PC_current <= 32'd0;
+  end
+  
+  always@ (posedge clock)
+    begin
+          PC_current <= PC_next;
+    end
+  
+  assign PC2 = PC_current + 4;
+  
+  //Instruction Memory
+  Instruction_Memory RV_IM(.PC_current(PC_current),.IR(IR));
+  
+  //Add Shift logic
+  
+  //Instantiate Control Logic
+  
+  
+
   
  if(Immsel == I)
     begin
