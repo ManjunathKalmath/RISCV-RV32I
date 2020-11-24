@@ -1,1 +1,3 @@
-//Need to add Control path code
+module RV32IM_Controlpath(clock);
+  input clock;
+endmodule
