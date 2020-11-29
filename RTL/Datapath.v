@@ -18,36 +18,18 @@ module RV32IM_Datapath(clock);
     begin
           PC_current <= PC_next;
     end
-  
+  begin
   assign PC2 = PC_current + 4;
   
   //Instruction Memory
   Instruction_Memory RV_IM(.PC_current(PC_current),.IR(IR));
   
   //Add Shift logic
-  
   //Instantiate Control Logic
-  
-  
-
-  
- if(Immsel == I)
+  if(Immsel == I)
     begin
       assign Imm = {{20{IR[31]}}, IR[30:20]}; //sign extension of IR[31] to upper Imm value
     end
-  
- initial begin
-  PC_current <= 31'd0;
- end
-  
- always @(posedge clk)
- begin 
-   PC_current <= PC_next;
- end
-  
-  //assign pc2 = pc_current + 4;
-  
-  Instruction_Memory RV_IM(PC_current,IR);
   
   assign funct3 = IR[14:12];
   assign funct7 = IR[31:25]; 
@@ -56,12 +38,13 @@ module RV32IM_Datapath(clock);
   assign rs1 = IR[19:15];
   assign rs2 = IR[24:20];
   
-//  PC <= PC + 4;
-  Register_File RF_RV(rs1,rs2,A,B,Clock,Write_Reg,Write_Data,Write);
+//Instantiating Register file
+  Register_File RF_RV(rs1(.rs1(rs1),.rs2(.rs2),A(.A),B(.B),clock(.clock),.Write_Reg(Write_Reg),.Write_Data(Write_Data),.Write(Write));
   
   assign Imm = {{20{IR[31]}}, IR[30:20]}; //sign extension of IR[31] to upper Imm value
   
-  RISCV_ALU ALU_RV(ALU_Ctrl,A,B,Imm,ALU_Out);
+  //Instantiating ALU
+  RISCV_ALU ALU_RV(.ALU_Ctrl(ALU_Ctrl),.A(A),.B(B),.Imm(Imm),.ALU_Out(ALU_Out));
   
   //assign Write_back = (WBsel == 1'b1) ? ALU_Out : Mem_read_data; //Write a control signal
   
@@ -78,11 +61,9 @@ module RV32IM_Datapath(clock);
     assign Mem_write_data = Read_Data2;
       
   //Register_File RF_RV(rs1,rs2,A,B,Clock,rd,Write_Data,Write);
-  
-  Branch_Comparator RV_BRC(Read_Data1,Read_Data2,BrUn,BrEq,BrLT,BrGE);
+  //Instatiating the Branch Comparator
+  Branch_Comparator RV_BRC(.Read_Data1(Read_Data1),.Read_Data2(Read_Data2),.BrUn(BrUn),.BrEq(BrEq),.BrLT(BrLT),.BrGE(BrGE));
   
   assign PC = (PCsel == 1'b1) ? ALU_Out : PC+4;
-  
-  
-  
+ end
 endmodule
