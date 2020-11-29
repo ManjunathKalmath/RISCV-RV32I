@@ -1,5 +1,5 @@
 //RISCV Register File
-module Register_File(Read_Reg1,Read_Reg2,Read_Data1,Read_data2,Clock,Write_Reg,Write_Data,Write);
+module Register_File(Read_Reg1,Read_Reg2,Read_Data1,Read_data2,clock,Write_Reg,Write_Data,Write);
  input [5:0] Read_Reg1,Read_Reg2,Write_Reg;
  input [31:0] Write_Data;
  input Write,clock;//here write is the Control to Register File
