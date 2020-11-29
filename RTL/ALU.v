@@ -14,26 +14,25 @@ module RISCV_ALU(ALU_Ctrl,Asel,Bsel,PC,Read_Data1,Read_Data1,Imm,ALU_Out);
  always @(Read_Data1,Read_Data1,Imm)
   begin
    case(ALU_Ctrl)
-    1 : ALU_Out <= A + B; //ADD
-    2 : ALU_Out <= A + Imm; //ADDI
-    3 : ALU_Out <= A | B; //OR
-    4 : ALU_Out <= A | Imm; //ORI;
-    5 : ALU_Out <= A ^ B; //XOR
-    6 : ALU_Out <= A ^ Imm; //XORI;
-    7 : ALU_Out <= A & B; //AND
-    8 : ALU_Out <= A & Imm; //ANDI;
-    9 : ALU_Out <= A - B; //SUB
-   10 : ALU_Out <= A < B ? 1 : 0; //SLT
-    //Need to refer the followings behaviour
-   11 : ALU_Out <=  //SLTI
-   12 : ALU_Out <= //SLTU
-   13 : ALU_Out <= //SLTIU
-   14 : ALU_Out <= //SLLI
-   15 : ALU_Out <= //SRLI
-   16 : ALU_Out <= //SRAI
-   17 : ALU_Out <= //SLL
-   18 : ALU_Out <= //SRL
-   19 : ALU_Out <= //SRA
+    1 : ALU_Out <= A + B;              //ADD
+    2 : ALU_Out <= A + Imm;            //ADDI
+    3 : ALU_Out <= A | B;              //OR
+    4 : ALU_Out <= A | Imm;            //ORI;
+    5 : ALU_Out <= A ^ B;              //XOR
+    6 : ALU_Out <= A ^ Imm;            //XORI;
+    7 : ALU_Out <= A & B;              //AND
+    8 : ALU_Out <= A & Imm;           //ANDI;
+    9 : ALU_Out <= A - B;             //SUB
+   10 : ALU_Out <= A < B ? 1 : 0;      //SLT
+   11 : ALU_Out <= A < Imm ? 1 : 0;   //SLTI
+   12 : ALU_Out <= A < B ? 1 : 0;     //SLTU
+   13 : ALU_Out <= A < Imm ? 1 : 0;    //SLTIU
+   14 : ALU_Out <= A << Imm;          //SLLI
+   15 : ALU_Out <= A >> Imm;          //SRLI
+   16 : ALU_Out <= A >> Imm;         //SRAI
+   17 : ALU_Out <= A << B;           //SLL
+   18 : ALU_Out <= A >> B;           //SRL
+   19 : ALU_Out <= A >> B;           //SRA
    default ALU_Out <= 0;
    endcase
   end
