@@ -1,5 +1,5 @@
-module RISCV_ALU(ALU_Ctrl,Asel,Bsel,PC,Read_Data1,Read_Data1,Imm,ALU_Out);
- input [31:0] Read_Data1,Read_Data1,Imm,PC;
+module RISCV_ALU(ALU_Ctrl,Asel,Bsel,PC,Read_Data1,Read_Data2,Imm,ALU_Out);
+ input [31:0] Read_Data1,Read_Data2,Imm,PC;
  input Asel,Bsel;
  input [4:0] ALU_Ctrl;
  wire [31:0] A,B;
@@ -11,7 +11,7 @@ module RISCV_ALU(ALU_Ctrl,Asel,Bsel,PC,Read_Data1,Read_Data1,Imm,ALU_Out);
  
  if(ALU_Out == 0)
   zero = ALU_Out;
- always @(Read_Data1,Read_Data1,Imm)
+ always @(Read_Data1,Read_Data2,Imm)
   begin
    case(ALU_Ctrl)
     1 : ALU_Out <= A + B;              //ADD
