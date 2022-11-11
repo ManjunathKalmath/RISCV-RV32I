@@ -1,1 +1,1 @@
-This Repo contains all the hardware implementation of RV32IM
+This Repo contains all the hardware implementation of RV32I
